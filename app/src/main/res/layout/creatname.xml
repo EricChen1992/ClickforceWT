@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="登入"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:textSize="25dp"
+            android:drawableLeft="@drawable/identificationview6"
+            android:textColor="@color/colorPrimary"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <EditText
+            android:id="@+id/enter_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:layout_marginLeft="20dp"
+            android:ems="10"
+            android:hint=" 帳號"
+            android:textSize="25dp"
+            android:textColorHint="@color/colorPrimary"
+            android:drawableLeft="@drawable/login_user_d21e62_30dp"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/bg_edittext"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/colorBackground_write"
+            android:textSize="13dp"
+            android:text="\@clickforce.com.tw" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/enter_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:ems="10"
+            android:hint=" 密碼"
+            android:textSize="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColorHint="@color/colorPrimary"
+            android:drawableLeft="@drawable/login_password_d21e62_30dp"
+            android:inputType="textPassword"
+            android:background="@drawable/bg_edittext"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.click.force.clickforce.working.time.sqldatabase.WorkingTimeService;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -62,16 +63,17 @@ public class MainActivity extends AppCompatActivity {
     TextView type, text_name, text_date,text_timeclockin, text_timeclockout, title_textdate, title_texttimeclockin, title_texttimeclockout, show_history_name, show_history_id;
     WorkingTimeService workingTimeService;
     Button punchBtn;
-    LinearLayout showContent;
+    LinearLayout showContent, show_history_column;
     ImageView showBottomType;
     ListView show_history_list;
     HistoryListView historyListView;
+    AlertDialog historyDialog;
 
     String TAG="MainActivity";
     int clicknb = 0;
-    final String workurl = "http://192.168.1.86/laravelEric/public/api/";
+//    final String workurl = "http://192.168.1.86/laravelEric/public/api/";
 //    final String workurl = "http://192.168.0.8/laravelEric/public/api/";
-//    final String workurl = "https://cua-new.holmesmind.com/api/";
+    final String workurl = "https://cua-new.holmesmind.com/api/";
     final String workIn = "worktimein";
     final String workOut = "worktimeout";
     final String cua = "getcua";
@@ -273,35 +275,67 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showHistory(View view) {
-        LayoutInflater layoutInflater = this.getLayoutInflater();
-        View showHistory = layoutInflater.inflate(R.layout.activity_historylist, null);
-        show_history_name = showHistory.findViewById(R.id.show_history_name);
-        show_history_id = showHistory.findViewById(R.id.show_history_id);
-        show_history_list = showHistory.findViewById(R.id.show_history_list);
-
-        historyListView = new HistoryListView();
-        show_history_list.setAdapter(historyListView);
 
         String result = connectPullDB();
-        JSONObject jsonObject = null;
+//        Log.e(TAG, "showHistory: "+result );
+        JSONArray jsonArray = null;
         try {
-            jsonObject = new JSONObject(result);
+            jsonArray = new JSONArray(result);
+            popViewToShowHistory(jsonArray);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        jsonObject.toString();
+//
+//        jsonObject.toString();
 //        show_history_id.setText(jsonObject.optString("name"));
 //        popViewToShowHistory();
 
     }
 
-    private void popViewToShowHistory(ArrayList<Map<String, String>> arrayList){
-        if (null != historyListView){
-            historyListView.clear();
-            for (int i=0 ; i<arrayList.size(); i++){
+    @SuppressLint("NewApi")
+    private void popViewToShowHistory(JSONArray jsonArray){
 
-            }
+        try {
+                LayoutInflater layoutInflater = this.getLayoutInflater();
+                View showHistory = layoutInflater.inflate(R.layout.activity_historylist, null);
+                show_history_name = showHistory.findViewById(R.id.show_history_name);
+                show_history_id = showHistory.findViewById(R.id.show_history_id);
+                show_history_name.setText("姓名: "+jsonArray.getJSONObject(0).optString("name"));
+                show_history_id.setText("ID: "+jsonArray.getJSONObject(0).optString("cua_id"));
+
+                show_history_list = showHistory.findViewById(R.id.show_history_list);
+                historyListView = new HistoryListView();
+                show_history_list.setAdapter(historyListView);
+
+
+                historyListView.clear();
+                for (int i=0 ; i<jsonArray.length(); i++){
+//                        Log.e(TAG, "popViewToShowHistory: ("+i+")"+jsonArray.getJSONObject(i).optString("time_clock_in"));
+    //                    LayoutInflater layoutInflater = LayoutInflater.from(this);
+                        show_history_column = (LinearLayout) layoutInflater.inflate(R.layout.activity_historycolumn, null);
+
+                        TextView column_date = show_history_column.findViewById(R.id.show_history_column_date);
+                        TextView column_timeclockin = show_history_column.findViewById(R.id.show_history_column_timeclockin);
+                        TextView column_timeclockout = show_history_column.findViewById(R.id.show_history_column_timeclockout);
+                        column_date.setText(jsonArray.getJSONObject(i).optString("date"));
+                        column_timeclockin.setText(jsonArray.getJSONObject(i).optString("time_clock_in"));
+                        column_timeclockout.setText(jsonArray.getJSONObject(i).optString("time_clock_out"));
+
+                        historyListView.addView(show_history_column);
+
+                }
+                historyListView.notifyDataSetChanged();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setView(showHistory);
+                historyDialog = builder.create();
+                historyDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.activity_history_black));
+                historyDialog.show();
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
@@ -331,14 +365,14 @@ public class MainActivity extends AppCompatActivity {
         HttpConnectPost post = new HttpConnectPost();
         post.params = workingTimeService.getFirstNameAndIdData();//取得打到後端資料;
         try {
-            post.execute(workTypeUrl).get();
+            return post.execute(workTypeUrl).get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        return result;
+        return "No data";
     }
 
     private boolean connectCuaAuth(String cua_eamil, String cua_password){
@@ -698,6 +732,9 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         popView(getStrDate());
         rotateAnim(showContent);
+
+        if (null != historyDialog)
+            historyDialog.dismiss();
     }
 
 

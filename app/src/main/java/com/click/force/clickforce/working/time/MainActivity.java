@@ -71,9 +71,9 @@ public class MainActivity extends AppCompatActivity {
 
     String TAG="MainActivity";
     int clicknb = 0;
-//    final String workurl = "http://192.168.1.86/laravelEric/public/api/";
-//    final String workurl = "http://192.168.0.8/laravelEric/public/api/";
-    final String workurl = "https://cua-new.holmesmind.com/api/";
+//    final String workurl = "http://192.168.1.65/laravelEric/public/api/";
+    final String workurl = "http://172.20.10.8/laravelEric/public/api/";
+//    final String workurl = "https://cua-new.holmesmind.com/api/";
     final String workIn = "worktimein";
     final String workOut = "worktimeout";
     final String cua = "getcua";
@@ -83,14 +83,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        try {
-//            sheetsAndJava = new sheetsAndJava();
-//            sheetsService = sheetsAndJava.getSheetsService();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (GeneralSecurityException e) {
-//            e.printStackTrace();
-//        }
         context = this;
         main = (RelativeLayout) findViewById(R.id.mainActivity);
         type = (TextView) findViewById(R.id.typMode);
@@ -457,8 +449,9 @@ public class MainActivity extends AppCompatActivity {
 //            if (ck) type.setText("下班...");
 //            popView(date);
 //        }
+        //20200615 如果超過以可以下班時間不用在提示
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        String msg = "您確定要下班了嗎？ \n您應該要 " + canTimeclockoutH + ":" + canTimeclockoutM + " 才可以下班唷!";
+        String msg = "您確定要下班了嗎？ \n您下班時間為 " + canTimeclockoutH + ":" + canTimeclockoutM + " 唷!";
         if (canTimeclockoutH > 19 || canTimeclockoutH == 19 && canTimeclockoutM > 30){//如果超過七點半就不詢問了
             msg = "您確定要下班了嗎？";
         }

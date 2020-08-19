@@ -72,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
     String TAG="MainActivity";
     int clicknb = 0;
 //    final String workurl = "http://192.168.1.65/laravelEric/public/api/";
-    final String workurl = "http://172.20.10.8/laravelEric/public/api/";
-//    final String workurl = "https://cua-new.holmesmind.com/api/";
+//    final String workurl = "http://172.20.10.8/laravelEric/public/api/";
+    final String workurl = "https://cua-new.holmesmind.com/api/";
     final String workIn = "worktimein";
     final String workOut = "worktimeout";
     final String cua = "getcua";

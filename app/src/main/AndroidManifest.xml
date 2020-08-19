@@ -2,13 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.click.force.clickforce.working.time">
 
+    <!--        android:networkSecurityConfig="@xml/network_security_config"-->
     <!-- 讀取網路狀態 -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_clickforce"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_clickforce_round"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">

@@ -9,7 +9,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import com.click.force.clickforce.working.time.GifView.GifImageView;
+import com.click.force.clickforce.working.time.gifview.GifImageView;
 
 public class WelcomeActivity extends AppCompatActivity implements Animation.AnimationListener {
     GifImageView gifImageView;
@@ -44,7 +44,7 @@ public class WelcomeActivity extends AppCompatActivity implements Animation.Anim
 
     @Override
     public void onAnimationEnd(Animation animation) {
-        startActivity(new Intent(c, MainActivity.class));
+        startActivity(new Intent(c, WorkActivity.class));
         finish();
     }
 

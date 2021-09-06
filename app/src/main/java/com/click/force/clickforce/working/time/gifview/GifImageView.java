@@ -1,4 +1,4 @@
-package com.click.force.clickforce.working.time.GifView;
+package com.click.force.clickforce.working.time.gifview;
 
 import android.content.Context;
 import android.graphics.Canvas;

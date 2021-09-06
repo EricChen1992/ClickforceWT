@@ -17,7 +17,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HttpConnectPost extends AsyncTask<String, Void, String> {
-    Map<String, String> params = new HashMap<>();
+//    public static final String workurl = "http://192.168.1.116/laravelEric/public/api/";
+//        public static final String workurl = "http://172.20.10.8/laravelEric/public/api/";
+    public static final String workurl = "https://cua-new.holmesmind.com/api/";
+    public static final String workIn = "worktimein";
+    public static final String workOut = "worktimeout";
+    public static final String cua = "getcua";
+    public static final String checkStatus = "getstatus";
+    public static final String all_data = "getUserAllData";
+
+    public Map<String, String> params = new HashMap<>();
+
+//    Map<String, String> params = new HashMap<>();
 
     @Override
     protected String doInBackground(String... requset) {
@@ -60,8 +71,13 @@ public class HttpConnectPost extends AsyncTask<String, Void, String> {
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
+            return "";
         } catch (IOException e) {
             e.printStackTrace();
+            return "";
+        } catch (Exception e){
+            e.printStackTrace();
+            return "";
         } finally {
             if (connection != null)
                 connection.disconnect();

@@ -17,9 +17,11 @@ import java.util.Map;
 public class WorkingTimeService extends SQLiteOpenHelper {
     private static final String TAG = "WorkingTimeService";
     public static final String DB_NAME = "Work";
-    public static final String TABLE_NAME = "PunchTime";
-    public static final String FIRST_NAME = "FirstName";
+    public static final String TABLE_NAME = "PunchTime";//儲存User Type
+    public static final String FIRST_NAME = "FirstName";//儲存User Info
 
+    public String wResult = "result";
+    public String wItem = "item";
     private String fId = "id";
     public String fCuaId = "cua_id";
     public String fCuaName = "cua_name";
@@ -31,6 +33,7 @@ public class WorkingTimeService extends SQLiteOpenHelper {
     public String wkTimeClockOut = "time_clock_out";
     public String wkType = "type";
     public String wkUpdate = "update_time";
+    public String wkResponse = "response";
 
     public WorkingTimeService (Context context){
         super(context, DB_NAME, null, 1);
@@ -38,6 +41,25 @@ public class WorkingTimeService extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+//        sqLiteDatabase.execSQL("CREATE TABLE if NOT EXISTS " +
+//                TABLE_NAME +
+//                String.format("("+ "%s integer PRIMARY KEY AUTOINCREMENT, " +
+//                                "%s text NOT NULL , " +
+//                                "%s text NOT NULL , " +
+//                                "%s text NOT NULL , " +
+//                                "%s text NOT NULL , " +
+//                                "%s text NOT NULL , " +
+//                                "%s text NOT NULL , " +
+//                                "%s text NOT NULL);"
+//                                ,wkId
+//                                ,wkName
+//                                ,wkdate
+//                                ,wkTimeClockIn
+//                                ,wkTimeClockOut
+//                                ,wkType
+//                                ,wkUpdate
+//                                ,wkResponse
+//                ));
         sqLiteDatabase.execSQL("CREATE TABLE if NOT EXISTS " +
                 TABLE_NAME +
                 String.format("("+ "%s integer PRIMARY KEY AUTOINCREMENT, " +
@@ -47,13 +69,13 @@ public class WorkingTimeService extends SQLiteOpenHelper {
                                 "%s text NOT NULL , " +
                                 "%s text NOT NULL , " +
                                 "%s text NOT NULL);"
-                                ,wkId
-                                ,wkName
-                                ,wkdate
-                                ,wkTimeClockIn
-                                ,wkTimeClockOut
-                                ,wkType
-                                ,wkUpdate
+                        ,wkId
+                        ,wkType
+                        ,wkdate
+                        ,wkTimeClockIn
+                        ,wkTimeClockOut
+                        ,wkUpdate
+                        ,wkResponse
                 ));
         sqLiteDatabase.execSQL("CREATE TABLE if NOT EXISTS " +
                 FIRST_NAME +
@@ -144,33 +166,28 @@ public class WorkingTimeService extends SQLiteOpenHelper {
 
     /**
      * 將資料插入DB
-     * @param  name
      * @param date
      * @param timeclockin
      * @param timeclockout
      * @param type
      * @return 成功:True 失敗:False
      * */
-    public boolean insertData(String name, String date, String timeclockin,String timeclockout, String type){
+    public boolean insertData(String name, String date, String timeclockin,String timeclockout, String type, String respons){
         Format f = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
         String strTime = f.format(new Date());
-        if (!"".equals(name)){
-            SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(wkName, name);
-            contentValues.put(wkdate, date);
-            contentValues.put(wkTimeClockIn, timeclockin);
-            contentValues.put(wkTimeClockOut, timeclockout);
-            contentValues.put(wkType, type);
-            contentValues.put(wkUpdate, strTime);
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(wkdate, date);
+        contentValues.put(wkTimeClockIn, timeclockin);
+        contentValues.put(wkTimeClockOut, timeclockout);
+        contentValues.put(wkType, type);
+        contentValues.put(wkUpdate, strTime);
+        contentValues.put(wkResponse, respons);
 
-            long responsdb = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
+        long responsdb = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
 //            Log.e(TAG,"responsedb = " + (responsdb == -1) );
-            sqLiteDatabase.close();
-            return !(responsdb == -1);
-        }
-
-        return false;
+        sqLiteDatabase.close();
+        return !(responsdb == -1);
     }
 
     /**
@@ -260,6 +277,40 @@ public class WorkingTimeService extends SQLiteOpenHelper {
         return fDate;
 
     }
+    /**
+     * 取得PunchTimeTable所有的資料
+     * @return 將每一筆資料用MAP包起來，存到ArrayList回傳
+     * */
+    public Map<String, String> getFindUsetStatus(){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Map<String, String> fDate = new HashMap<>();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT *FROM " + TABLE_NAME + ";",null);
+        if (cursor.getCount() == 0) return fDate;
+        cursor.moveToFirst();
+        do{
+            for (String key : cursor.getColumnNames()) {
+                fDate.put(key, cursor.getString(cursor.getColumnIndex(key)));
+            }
+//            fDate.put(wkName,cursor.getString(1));
+//            fDate.put(wkdate,cursor.getString(2));
+//            fDate.put(wkTimeClockIn,cursor.getString(3));
+//            fDate.put(wkTimeClockOut,cursor.getString(4));
+//            fDate.put(wkType,cursor.getString(5));
+//            fDate.put(wkUpdate,cursor.getString(6));
+
+        }while (cursor.moveToNext());
+        cursor.close();
+        sqLiteDatabase.close();
+        return fDate;
+
+    }
+
+    public boolean delPunchTime(){
+        Log.e(TAG, "delPunchTime");
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        int result = sqLiteDatabase.delete(TABLE_NAME, null, null);
+        return result == 1;
+    }
 
     /**
      * 取得TimeTable所有DB內的資料
@@ -272,6 +323,7 @@ public class WorkingTimeService extends SQLiteOpenHelper {
         if (cursor.getCount() == 0) return alldata;
         cursor.moveToFirst();
         do {
+
             Map<String,String> data = new HashMap<>();
             data.put(wkName,cursor.getString(1));
             data.put(wkdate,cursor.getString(2));

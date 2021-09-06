@@ -7,10 +7,10 @@
     android:background="@color/colorBackground_write"
     tools:context=".WelcomeActivity">
 
-    <com.click.force.clickforce.working.time.GifView.GifImageView
+    <com.click.force.clickforce.working.time.gifview.GifImageView
         android:id="@+id/GifImageView"
-        android:layout_width="111dp"
-        android:layout_height="43dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_centerVertical="true"
         android:scaleType="fitCenter" />

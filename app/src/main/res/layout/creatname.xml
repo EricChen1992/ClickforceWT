@@ -26,56 +26,93 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/enter_email"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="6"
+            android:layout_weight="10"
             android:layout_marginLeft="20dp"
-            android:ems="10"
-            android:hint=" 帳號"
-            android:textSize="25dp"
-            android:textColorHint="@color/colorPrimary"
-            android:drawableLeft="@drawable/login_user_d21e62_30dp"
-            android:inputType="textEmailAddress"
-            android:background="@drawable/bg_edittext"
-            />
+            android:textColorHint="@color/colorPrimary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/enter_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:layout_weight="1"
+                android:drawableStart="@drawable/login_user_d21e62_30dp"
+                android:ems="10"
+                android:hint="帳號"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/colorBackground_write" />
+        </com.google.android.material.textfield.TextInputLayout>
+<!--        <EditText-->
+<!--            android:id="@+id/enter_email"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="10"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:ems="10"-->
+<!--            android:hint=" 帳號"-->
+<!--            android:textSize="25dp"-->
+<!--            android:textColorHint="@color/colorPrimary"-->
+<!--            android:drawableLeft="@drawable/login_user_d21e62_30dp"-->
+<!--            android:inputType="textEmailAddress"-->
+<!--            android:background="@drawable/bg_edittext" />-->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
+            android:layout_marginBottom="3dp"
             android:layout_weight="0"
-            android:layout_gravity="center"
+            android:layout_gravity="bottom"
             android:textStyle="bold"
             android:textColor="@color/colorBackground_write"
             android:textSize="13dp"
             android:text="\@clickforce.com.tw" />
 
     </LinearLayout>
-    <LinearLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <EditText
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="25dp"
+        android:hint=" 密碼"
+        android:textColorHint="@color/colorPrimary"
+        app:endIconMode="password_toggle">
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/enter_password"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="8"
-            android:ems="10"
-            android:hint=" 密碼"
-            android:textSize="25dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:textColorHint="@color/colorPrimary"
-            android:drawableLeft="@drawable/login_password_d21e62_30dp"
+            android:layout_weight="1"
+            android:ems="11"
+            android:drawableStart="@drawable/login_password_d21e62_30dp"
             android:inputType="textPassword"
-            android:background="@drawable/bg_edittext"/>
-    </LinearLayout>
+            android:textColor="@color/colorBackground_write"/>
+    </com.google.android.material.textfield.TextInputLayout>
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal">-->
+<!--        <EditText-->
+<!--            android:id="@+id/enter_password"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="8"-->
+<!--            android:ems="10"-->
+<!--            android:hint=" 密碼"-->
+<!--            android:textSize="25dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:layout_marginRight="20dp"-->
+<!--            android:textColorHint="@color/colorPrimary"-->
+<!--            android:drawableLeft="@drawable/login_password_d21e62_30dp"-->
+<!--            android:inputType="textPassword"-->
+<!--            android:background="@drawable/bg_edittext"/>-->
+<!--    </LinearLayout>-->
 
 
 
